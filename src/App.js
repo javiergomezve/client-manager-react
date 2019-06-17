@@ -1,8 +1,9 @@
 import React from 'react';
-import { BrowserRouter as Router, Toute, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
-import './App.css';
 import AppNavbar from './components/layout/AppNavbar';
+import Dashboard from './components/layout/Dashboard';
+import './App.css';
 
 function App() {
   return (
@@ -10,7 +11,9 @@ function App() {
       <div className="App">
         <AppNavbar />
         <div className="container">
-          <h1>Hola</h1>
+          <Switch>
+            <Route exact path="/" component={Dashboard} />
+          </Switch>
         </div>
       </div>
     </Router>
