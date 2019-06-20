@@ -10,8 +10,60 @@ import Spinner from '../layout/Spinner';
 
 class ClientDetails extends Component {
 
+  state = {
+    showBalanceUpdate: false,
+    balanceUpdateAmount: ''
+  };
+
+  balanceSubmit = e => {
+    e.preventDefault();
+
+    const { client, firestore } = this.props;
+    const { balanceUpdateAmount } = this.state;
+
+    const clientUpdate = {
+      balance: parseFloat(balanceUpdateAmount)
+    };
+
+    firestore.update({ collection: 'clients', doc: client.id }, clientUpdate);
+  }
+
+  onDeleteClick = () => {
+    const { client, firestore, history } = this.props;
+
+    firestore.delete({ collection: 'clients', doc: client.id })
+      .then(history.push('/'))
+  };
+
+  onChange = e => this.setState({ [e.target.name]: e.target.value });
+
   render() {
     const { client } = this.props;
+    const { showBalanceUpdate, balanceUpdateAmount } = this.state;
+
+    let balanceForm = '';
+
+    if (showBalanceUpdate) {
+      balanceForm = (
+        <form onSubmit={this.balanceSubmit}>
+          <div className="input-group">
+            <input
+              type="text"
+              className="form-control"
+              name="balanceUpdateAmount"
+              placeholder="Agregar nuevo balance"
+              value={balanceUpdateAmount}
+              onChange={this.onChange}
+            />
+            <div className="input-group-apped">
+              <input type="submit" value="Actualizar" className="btn btn-outline-dark" />
+            </div>
+          </div>
+        </form>
+      );
+    } else {
+      balanceForm = null;
+    }
 
     if (client) {
       return (
@@ -28,7 +80,7 @@ class ClientDetails extends Component {
                 <Link to={`/client/edit/${client.id}`} className="btn btn-dark">
                   Editar
                 </Link>
-                <button className="btn btn-danger">
+                <button onClick={this.onDeleteClick} className="btn btn-danger">
                   Borrar
                 </button>
               </div>
@@ -57,9 +109,14 @@ class ClientDetails extends Component {
                       'text-success': client.balance === 0
                     })}>
                       ${parseFloat(client.balance).toFixed(2)}
-                    </span>
+                    </span> {' '}
+                    <small>
+                      <a href="#!" onClick={() => this.setState({ showBalanceUpdate: !this.state.showBalanceUpdate })}>
+                        <i className="fa fa-pencil-alt" /> Editar
+                      </a>
+                    </small>
                   </h3>
-                  {/* @todo - balanceForm */}
+                  {balanceForm}
                 </div>
               </div>
 
