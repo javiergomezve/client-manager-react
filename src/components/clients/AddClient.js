@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom';
-// import { compose } from 'redux';
-// import { connect } from 'react-redux';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
-import { firestore } from 'firebase';
 
 class AddClient extends Component {
   state = {
@@ -33,7 +32,10 @@ class AddClient extends Component {
   onChange = (e) => this.setState({ [e.target.name]: e.target.value });
 
   render() {
+    const { disableBalanceOnAdd } = this.props.settings;
+
     const { firstName, lastName, email, phone, balance } = this.state;
+
     return (
       <div>
         <div className="row">
@@ -114,6 +116,7 @@ class AddClient extends Component {
                   onChange={this.onChange}
                   value={balance}
                   onChange={this.onChange}
+                  disabled={disableBalanceOnAdd}
                 />
               </div>
 
@@ -127,7 +130,13 @@ class AddClient extends Component {
 }
 
 AddClient.propTypes = {
-  firestore: PropTypes.object.isRequired
+  firestore: PropTypes.object.isRequired,
+  settings: PropTypes.object.isRequired
 };
 
-export default firestoreConnect()(AddClient);
+export default compose(
+  firestoreConnect(),
+  connect((state, props) => ({
+    settings: state.settings
+  }))
+)(AddClient);
