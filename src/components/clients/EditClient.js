@@ -49,7 +49,7 @@ class EditClient extends Component {
           <div className="row">
             <div className="col-md-5">
               <Link to="/" className="btn btn-link">
-                <i className="fa fa-arrow-circle-left"></i>
+                <i className="fa fa-arrow-circle-left"></i>{' '}
                 Volver
             </Link>
             </div>
@@ -126,7 +126,7 @@ class EditClient extends Component {
                   />
                 </div>
 
-                <input type="submit" value="Submit" className="btn btn-primary btn-block" />
+                <input type="submit" value="Editar" className="btn btn-primary btn-block" />
               </form>
             </div>
           </div>

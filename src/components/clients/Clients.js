@@ -42,7 +42,7 @@ class Clients extends Component {
             </div>
             <div className="col-md-6">
               <h5 className="text-right text-secondary">
-                Total debido{' '}
+                Balance Total{' '}
                 <span className="text-primary">
                   ${parseFloat(totalOwed).toFixed(2)}
                 </span>
@@ -55,7 +55,7 @@ class Clients extends Component {
               <tr>
                 <th>Nombre</th>
                 <th>Email</th>
-                <th>Saldo</th>
+                <th>Balance</th>
                 <th />
               </tr>
             </thead>
@@ -67,7 +67,7 @@ class Clients extends Component {
                   <td>${parseFloat(client.balance).toFixed(2)}</td>
                   <td>
                     <Link to={`/client/${client.id}`} className="btn btn-secondary">
-                      <i className="fa fa-arrow-circle-right"></i>
+                      <i className="fa fa-arrow-circle-right"></i>{' '}
                       Detalles
                     </Link>
                   </td>
