@@ -54,7 +54,7 @@ class Clients extends Component {
             <thead className="thead-inverse">
               <tr>
                 <th>Nombre</th>
-                <th>Email</th>
+                <th className="d-none d-sm-block">Email</th>
                 <th>Balance</th>
                 <th />
               </tr>
@@ -63,12 +63,12 @@ class Clients extends Component {
               {clients.map(client => (
                 <tr key={client.id}>
                   <td>{client.firstName} {client.lastName}</td>
-                  <td>{client.email}</td>
+                  <td className="d-none d-sm-block">{client.email}</td>
                   <td>${parseFloat(client.balance).toFixed(2)}</td>
                   <td>
                     <Link to={`/client/${client.id}`} className="btn btn-secondary">
                       <i className="fa fa-arrow-circle-right"></i>{' '}
-                      Detalles
+                      <span className="d-none d-sm-block">Detalles</span>
                     </Link>
                   </td>
                 </tr>
